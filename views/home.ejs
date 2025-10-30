@@ -3,30 +3,29 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title><%= blog.title %> | Blogify</title>
+<title>Modern Blog — Home | Blogify</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
 <style>
   :root{
-    --bg:#f4f6f8;
-    --card:#ffffff;
-    --muted:#6b7280;
+    --bg:#000000; /* black background as requested */
+    --card:#0b0b0b;
+    --muted:#9ca3af;
     --accent:#2563eb;
     --accent-2:#06b6d4;
     --success:#10b981;
-    --shadow: 0 6px 24px rgba(15,23,42,0.06);
+    --shadow: 0 6px 24px rgba(2,6,23,0.6);
     --radius:12px;
     --max:1100px;
+    --text: #e6eef8;
   }
   *{box-sizing:border-box}
   body{
     margin:0;
     font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
     background:var(--bg);
-    color:#0f172a;
+    color:var(--text);
     -webkit-font-smoothing:antialiased;
   }
 
@@ -42,14 +41,15 @@
 
   /* Main article card */
   .article{
-    background:var(--card);
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
     border-radius:var(--radius);
     box-shadow:var(--shadow);
     overflow:hidden;
+    border: 1px solid rgba(255,255,255,0.04);
   }
   .article-header{
     padding:28px;
-    border-bottom:1px solid rgba(15,23,42,0.04);
+    border-bottom:1px solid rgba(255,255,255,0.03);
   }
   .kicker{
     display:inline-block;
@@ -65,6 +65,7 @@
     font-size:24px;
     font-weight:700;
     margin:6px 0 8px;
+    color:var(--text);
   }
   .meta{
     display:flex;
@@ -75,7 +76,7 @@
   }
   .meta img{
     width:36px;height:36px;border-radius:50%;
-    object-fit:cover;border:2px solid #fff;box-shadow:0 2px 6px rgba(2,6,23,0.06);
+    object-fit:cover;border:2px solid rgba(255,255,255,0.02);box-shadow:0 2px 6px rgba(2,6,23,0.5);
   }
 
   .hero-img{
@@ -87,9 +88,10 @@
 
   .article-body{
     padding:22px 28px 28px;
-    color:#0b1220;
+    color:var(--text);
     line-height:1.65;
     font-size:16px;
+    background: transparent;
   }
   .article-body p{margin:0 0 14px}
 
@@ -111,27 +113,17 @@
     cursor:pointer;
     border: none;
     background:transparent;
+    color:var(--text);
   }
   .btn.like {
     color:var(--accent);
     border:1px solid rgba(37,99,235,0.12);
     background: linear-gradient(90deg, rgba(37,99,235,0.06), transparent);
   }
-  .btn.like.liked {
-    background: linear-gradient(90deg, var(--success), var(--accent-2));
-    color: white;
-  }
-  .btn.follow {
+  .btn.subscribe {
     color:#fff;
     background:linear-gradient(90deg,var(--accent),var(--accent-2));
     box-shadow: 0 6px 18px rgba(37,99,235,0.14);
-  }
-  .btn.follow.following {
-    background: var(--muted);
-  }
-  .btn.follow.requested {
-    background: #9ca3af;
-    cursor: not-allowed;
   }
 
   /* Right column (sidebar) */
@@ -144,15 +136,17 @@
     gap:16px;
   }
   .card{
-    background:var(--card);
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
     border-radius:12px;
     padding:14px;
     box-shadow:var(--shadow);
+    border: 1px solid rgba(255,255,255,0.03);
   }
   .subscribe-h{
     font-weight:700;
     font-size:16px;
     margin-bottom:6px;
+    color:var(--text);
   }
   .subs-desc{
     color:var(--muted);
@@ -175,9 +169,10 @@
     min-height:72px;
     padding:12px;
     border-radius:10px;
-    border:1px solid rgba(2,6,23,0.06);
+    border:1px solid rgba(255,255,255,0.04);
     resize:vertical;
-    background:#fbfdff;
+    background:#05060a;
+    color:var(--text);
     font-size:14px;
   }
   .comment-form .submit{
@@ -197,7 +192,8 @@
     align-items:flex-start;
     padding:12px;
     border-radius:10px;
-    background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+    border: 1px solid rgba(255,255,255,0.02);
   }
   .comment .avatar{
     width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;
@@ -215,13 +211,14 @@
     font-weight:600;
     font-size:14px;
     margin-bottom:6px;
+    color:var(--text);
   }
   .comment-time{
     color:var(--muted);
     font-size:13px;
   }
   .comment-text{
-    color:#0b1220;
+    color:var(--text);
     font-size:15px;
     margin-bottom:8px;
   }
@@ -234,9 +231,9 @@
     font-size:13px;
   }
   .comment-actions button{
-    border:none;background:transparent;cursor:pointer;padding:6px;border-radius:8px;
+    border:none;background:transparent;cursor:pointer;padding:6px;border-radius:8px;color:var(--muted);
   }
-  .comment-actions button:hover{background:rgba(2,6,23,0.04)}
+  .comment-actions button:hover{background:rgba(255,255,255,0.02)}
 
   .reply-list{margin-top:10px;padding-left:56px;display:flex;flex-direction:column;gap:10px}
 
@@ -249,7 +246,7 @@
   .flex{display:flex;align-items:center;gap:8px}
   .center{display:flex;align-items:center;justify-content:center}
   .pill{
-    background:rgba(15,23,42,0.03);
+    background:rgba(255,255,255,0.02);
     padding:6px 10px;border-radius:999px;font-weight:600;font-size:13px;color:var(--muted)
   }
 
@@ -259,9 +256,14 @@
     .sidebar{position:static}
     .hero-img{height:220px}
   }
+
+  /* focus outline for keyboard users */
+  body.show-focus :focus { outline: 2px solid rgba(37,99,235,0.6); outline-offset: 3px; border-radius: 6px; }
 </style>
 </head>
 <body>
+
+  <!-- keep your existing header (if any) so auth nav stays consistent -->
   <%- include('partials/header', { user }) %>
 
 <div class="wrap">
@@ -271,136 +273,50 @@
     <article class="article" aria-labelledby="post-title">
 
       <div class="article-header">
-        <span class="kicker">Blog Post</span>
-        <h1 id="post-title" class="title"><%= blog.title %></h1>
+        <span class="kicker">Tech · Tutorial</span>
+        <h1 id="post-title" class="title">How to Build a High-Quality Blog Frontend (Client-side)</h1>
 
         <div class="meta" style="margin-top:10px;">
-          <img src="<%= blog.createdBy.profileImageURL %>" alt="<%= blog.createdBy.fullname %> avatar">
+          <img src="https://i.pravatar.cc/100?img=12" alt="Author avatar">
           <div style="display:flex;flex-direction:column;">
-            <div style="font-weight:600">
-              <a href="/profile/<%= blog.createdBy._id %>" style="color: inherit; text-decoration: none;"><%= blog.createdBy.fullname %></a>
-              <% if (isOwn) { %>
-                <span style="font-size: 12px; color: var(--muted);">(You)</span>
-              <% } %>
-            </div>
-            <div class="small muted"><i class="fas fa-clock"></i> <%= moment(blog.createdAt).fromNow() %></div>
+            <div style="font-weight:600">Vishant Velip</div>
+            <div class="small muted">Oct 30, 2025 • 8 min read</div>
           </div>
         </div>
 
         <div class="article-actions" style="margin-top:14px;">
-          <% if (user) { %>
-            <button id="likePostBtn" class="btn like <%= blog.likes.some(like => like._id.toString() === user._id.toString()) ? 'liked' : '' %>" data-blog-id="<%= blog._id %>" data-liked="<%= blog.likes.some(like => like._id.toString() === user._id.toString()) ? 'true' : 'false' %>">
-              <i class="fa-regular fa-heart"></i> <span id="postLikeCount"><%= blog.likes.length %></span>
-            </button>
-            <% if (!isOwn) { %>
-              <button class="btn follow ajax-follow-btn <%= followStatus === 'following' ? 'following' : followStatus === 'requested' ? 'requested' : '' %>" data-user-id="<%= blog.createdBy._id %>" data-follow-status="<%= followStatus %>">
-                <i class="fas <%= followStatus === 'following' ? 'fa-user-minus' : followStatus === 'requested' ? 'fa-user-times' : 'fa-user-plus' %>"></i>
-                <%= followStatus === 'following' ? 'Unfollow' : followStatus === 'requested' ? 'Cancel Request' : 'Follow' %>
-              </button>
-            <% } %>
-          <% } else { %>
-            <button class="btn like" disabled><i class="fa-regular fa-heart"></i> <%= blog.likes.length %> Likes</button>
-          <% } %>
+          <button id="likePostBtn" class="btn like" aria-pressed="false"><i class="fa-regular fa-heart"></i> <span id="postLikeCount">0</span></button>
+          <button id="subscribeBtn" class="btn subscribe" title="Subscribe to the author">Subscribe</button>
         </div>
       </div>
 
-      <% if (blog.coverImage) { %>
-        <img class="hero-img" src="<%= blog.coverImage %>" alt="<%= blog.title %>">
-      <% } %>
+      <img class="hero-img" src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=1a7a9932e150d1c07b4b3f5b8a7b3a9b" alt="Hero image">
 
       <div class="article-body">
-        <%= blog.body.replace(/\n/g, '<br>') %>
-      </div>
+        <p>This example demonstrates a robust frontend-only blog post UI with a comments system implemented in vanilla JavaScript. It includes: add comment, reply, like comment, delete comment, post like and subscribe button. Comments persist in <code>localStorage</code> for demo purposes.</p>
+        <p>Use this UI as a starting point and connect the actions to your server APIs to make them real (create, delete, like, subscribe endpoints).</p>
 
-      <section class="comments" aria-label="Comments section">
-        <h2 style="margin-bottom:8px"><i class="fas fa-comments"></i> Discussion (<%= blog.totalComments %>)</h2>
+        <section class="comments" aria-label="Comments section">
+          <h2 style="margin-bottom:8px">Discussion</h2>
 
-        <!-- New comment -->
-        <% if (user) { %>
+          <!-- New comment -->
           <div class="card comment-form" aria-live="polite">
-            <img class="avatar" src="<%= user.profileImageURL %>" alt="<%= user.fullname %>">
+            <img class="avatar" src="https://i.pravatar.cc/60?img=3" alt="you">
             <div style="flex:1">
-              <form id="commentForm">
-                <textarea id="newCommentText" name="content" placeholder="Write a thoughtful comment..." aria-label="Write a comment" required></textarea>
-                <div style="display:flex;justify-content:flex-end;margin-top:8px;">
-                  <button type="submit" id="addCommentBtn" class="btn subscribe" aria-label="Post comment">Post Comment</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        <% } else { %>
-          <div class="center muted" style="padding:20px; border:1px solid rgba(2,6,23,0.06); border-radius:10px; margin-bottom:20px;">
-            <i class="fas fa-sign-in-alt"></i> Sign in to comment
-          </div>
-        <% } %>
-
-        <!-- Comments list -->
-        <div class="comment-list card" id="commentsContainer" style="padding:12px 14px;">
-          <% if (blog.comments.length === 0) { %>
-            <div id="noComments" class="center muted" style="padding:28px 0;">Be the first to comment.</div>
-          <% } %>
-          <% blog.comments.forEach(comment => { %>
-            <div class="comment" data-comment-id="<%= comment._id %>">
-              <img class="avatar" src="<%= comment.createdBy.profileImageURL %>" alt="<%= comment.createdBy.fullname %>">
-              <div class="comment-body">
-                <div class="comment-top">
-                  <div class="comment-meta">
-                    <a href="/profile/<%= comment.createdBy._id %>" style="color: inherit; text-decoration: none; font-weight: 600;"><%= comment.createdBy.fullname %></a>
-                    <span class="comment-time muted"> • <%= moment(comment.createdAt).fromNow() %></span>
-                  </div>
-                  <div class="comment-actions">
-                    <% if (user) { %>
-                      <button class="comment-action-btn like-comment-btn <%= comment.likes.some(l => l._id.toString() === user._id.toString()) ? 'liked' : '' %>" data-comment-id="<%= comment._id %>">
-                        <i class="fa-regular fa-thumbs-up"></i> <span class="like-count"><%= comment.likes.length %></span>
-                      </button>
-                      <button class="reply-btn" data-comment-id="<%= comment._id %>">
-                        <i class="fa-regular fa-comment"></i> Reply
-                      </button>
-                      <% if (comment.createdBy._id.toString() === user._id.toString()) { %>
-                        <button class="delete-comment-btn" data-comment-id="<%= comment._id %>">
-                          <i class="fa-regular fa-trash-can"></i>
-                        </button>
-                      <% } %>
-                    <% } %>
-                  </div>
-                </div>
-                <div class="comment-text"><%= comment.content %></div>
-                <% if (comment.replies && comment.replies.length > 0) { %>
-                  <div class="reply-list">
-                    <% comment.replies.forEach(reply => { %>
-                      <div class="comment" data-comment-id="<%= reply._id %>" style="padding:10px; background:transparent;">
-                        <img class="avatar" src="<%= reply.createdBy.profileImageURL %>" alt="<%= reply.createdBy.fullname %>">
-                        <div class="comment-body">
-                          <div class="comment-top">
-                            <div class="comment-meta">
-                              <a href="/profile/<%= reply.createdBy._id %>" style="color: inherit; text-decoration: none; font-weight: 600;"><%= reply.createdBy.fullname %></a>
-                              <span class="comment-time muted"> • <%= moment(reply.createdAt).fromNow() %></span>
-                            </div>
-                            <div class="comment-actions">
-                              <% if (user) { %>
-                                <button class="comment-action-btn like-comment-btn <%= reply.likes.some(l => l._id.toString() === user._id.toString()) ? 'liked' : '' %>" data-comment-id="<%= reply._id %>">
-                                  <i class="fa-regular fa-thumbs-up"></i> <span class="like-count"><%= reply.likes.length %></span>
-                                </button>
-                                <% if (reply.createdBy._id.toString() === user._id.toString()) { %>
-                                  <button class="delete-comment-btn" data-comment-id="<%= reply._id %>">
-                                    <i class="fa-regular fa-trash-can"></i>
-                                  </button>
-                                <% } %>
-                              <% } %>
-                            </div>
-                          </div>
-                          <div class="comment-text"><%= reply.content %></div>
-                        </div>
-                      </div>
-                    <% }) %>
-                  </div>
-                <% } %>
-                <div class="reply-form-container"></div>
+              <textarea id="newCommentText" placeholder="Write a thoughtful comment..." aria-label="Write a comment"></textarea>
+              <div style="display:flex;justify-content:flex-end;margin-top:8px;">
+                <button id="addCommentBtn" class="btn subscribe" aria-label="Post comment">Post Comment</button>
               </div>
             </div>
-          <% }) %>
-        </div>
-      </section>
+          </div>
+
+          <!-- Comments list -->
+          <div class="comment-list card" id="commentsContainer" style="padding:12px 14px;">
+            <!-- JS will render comments here -->
+            <div id="noComments" class="center muted" style="padding:28px 0;">Be the first to comment.</div>
+          </div>
+        </section>
+      </div>
 
     </article>
   </main>
@@ -408,33 +324,32 @@
   <!-- SIDEBAR -->
   <aside class="sidebar" aria-label="Sidebar">
     <div class="card">
-      <div class="subscribe-h">Follow <%= blog.createdBy.fullname %></div>
-      <div class="subs-desc">Get updates on new posts.</div>
-      <% if (user && !isOwn) { %>
-        <button class="btn follow ajax-follow-btn <%= followStatus === 'following' ? 'following' : followStatus === 'requested' ? 'requested' : '' %>" data-user-id="<%= blog.createdBy._id %>" data-follow-status="<%= followStatus %>">
-          <i class="fas <%= followStatus === 'following' ? 'fa-user-minus' : followStatus === 'requested' ? 'fa-user-times' : 'fa-user-plus' %>"></i>
-          <%= followStatus === 'following' ? 'Unfollow' : followStatus === 'requested' ? 'Cancel Request' : 'Follow' %>
-        </button>
-      <% } else { %>
-        <p class="small muted">Sign in to follow.</p>
-      <% } %>
+      <div class="subscribe-h">Subscribe to the newsletter</div>
+      <div class="subs-desc">Get weekly articles and tutorials about web development, UI, and design.</div>
+      <div style="display:flex;gap:8px">
+        <input id="emailField" type="email" placeholder="Your email" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:#05060a;color:var(--text)">
+        <button id="subscribeEmailBtn" class="btn subscribe">Subscribe</button>
+      </div>
+      <div style="margin-top:10px" class="small muted">No spam — unsubscribe anytime.</div>
     </div>
 
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div style="font-weight:700">About the author</div>
-        <div class="pill">Blogger</div>
+        <div class="pill">Top writer</div>
       </div>
       <div style="display:flex;gap:12px;margin-top:12px;align-items:center">
-        <img src="<%= blog.createdBy.profileImageURL %>" alt="<%= blog.createdBy.fullname %> avatar" style="width:64px;height:64px;border-radius:12px">
+        <img src="https://i.pravatar.cc/80?img=12" alt="avatar" style="width:64px;height:64px;border-radius:12px">
         <div>
-          <div style="font-weight:700"><%= blog.createdBy.fullname %></div>
-          <div class="small muted">Blogger</div>
+          <div style="font-weight:700">Vishant Velip</div>
+          <div class="small muted">Frontend engineer & designer</div>
         </div>
       </div>
-      <p class="small muted" style="margin-top:12px">Posts about various topics.</p>
+      <p class="small muted" style="margin-top:12px">I write about modern UI, JavaScript and building fast, maintainable frontends.</p>
       <div style="margin-top:12px;display:flex;gap:8px">
-        <a href="/profile/<%= blog.createdBy._id %>" class="btn"><i class="fas fa-user"></i></a>
+        <button class="btn" aria-label="twitter"><i class="fa-brands fa-twitter"></i></button>
+        <button class="btn" aria-label="github"><i class="fa-brands fa-github"></i></button>
+        <button class="btn" aria-label="linkedin"><i class="fa-brands fa-linkedin"></i></button>
       </div>
     </div>
 
@@ -444,266 +359,353 @@
 
 <script>
 /* -------------------------
-  Adapted comment system with AJAX
+  Client-side comment system (same as the demo you provided)
 -------------------------*/
 
-const blogId = '<%= blog._id %>';
+const currentUser = {
+  id: 'user-you',
+  name: 'You',
+  avatar: 'https://i.pravatar.cc/60?img=3'
+};
 
-document.addEventListener('DOMContentLoaded', () => {
-  // AJAX for blog likes
-  const likePostBtn = document.getElementById('likePostBtn');
-  if (likePostBtn) {
-    likePostBtn.addEventListener('click', async () => {
-      const isLiked = likePostBtn.dataset.liked === 'true';
-      try {
-        const response = await fetch(`/blog/${blogId}/like`, {
-          method: 'POST',
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'application/json'
-          }
-        });
-        if (response.ok) {
-          const data = await response.json();
-          likePostBtn.dataset.liked = data.isLiked ? 'true' : 'false';
-          likePostBtn.classList.toggle('liked', data.isLiked);
-          document.getElementById('postLikeCount').textContent = data.likesCount;
-          const icon = likePostBtn.querySelector('i');
-          icon.className = data.isLiked ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
+const LS_COMMENTS_KEY = 'demo_blog_comments_v1';
+const LS_POST_LIKES = 'demo_blog_like_v1';
+const LS_SUBSCRIBED = 'demo_blog_subscribed_v1';
+
+const commentsContainer = document.getElementById('commentsContainer');
+const noCommentsEl = document.getElementById('noComments');
+const newCommentText = document.getElementById('newCommentText');
+const addCommentBtn = document.getElementById('addCommentBtn');
+const likePostBtn = document.getElementById('likePostBtn');
+const postLikeCountEl = document.getElementById('postLikeCount');
+const subscribeBtn = document.getElementById('subscribeBtn');
+const emailField = document.getElementById('emailField');
+const subscribeEmailBtn = document.getElementById('subscribeEmailBtn');
+
+let comments = [];
+
+function uid(prefix='id'){
+  return prefix + '_' + Date.now().toString(36) + '_' + Math.floor(Math.random()*10000).toString(36);
+}
+
+function loadState(){
+  try {
+    const raw = localStorage.getItem(LS_COMMENTS_KEY);
+    comments = raw ? JSON.parse(raw) : [];
+  } catch(e){ comments = []; }
+
+  const likes = parseInt(localStorage.getItem(LS_POST_LIKES) || '0', 10);
+  postLikeCountEl.textContent = isNaN(likes) ? '0' : likes;
+
+  const subscribed = localStorage.getItem(LS_SUBSCRIBED) === '1';
+  if(subscribed){
+    subscribeBtn.textContent = 'Subscribed';
+    subscribeBtn.style.opacity = 0.9;
+    subscribeBtn.disabled = false;
+  }
+}
+
+function saveState(){
+  localStorage.setItem(LS_COMMENTS_KEY, JSON.stringify(comments));
+}
+
+function timeAgo(ts){
+  const s = Math.floor((Date.now() - ts)/1000);
+  if(s < 60) return s + 's';
+  if(s < 3600) return Math.floor(s/60) + 'm';
+  if(s < 86400) return Math.floor(s/3600) + 'h';
+  return Math.floor(s/86400) + 'd';
+}
+
+function renderComments(){
+  commentsContainer.innerHTML = '';
+  if(comments.length === 0){
+    commentsContainer.appendChild(noCommentsEl);
+    return;
+  }
+  // ensure noCommentsEl isn't duplicated
+  if(noCommentsEl.parentNode === commentsContainer) noCommentsEl.remove();
+
+  comments.forEach(c => {
+    const el = renderCommentEl(c);
+    commentsContainer.appendChild(el);
+  });
+}
+
+function renderCommentEl(c){
+  const wrapper = document.createElement('div');
+  wrapper.className = 'comment';
+  wrapper.dataset.id = c.id;
+
+  const avatar = document.createElement('img');
+  avatar.className = 'avatar';
+  avatar.src = c.author.avatar;
+  avatar.alt = c.author.name;
+
+  const body = document.createElement('div');
+  body.className = 'comment-body';
+
+  const top = document.createElement('div');
+  top.className = 'comment-top';
+
+  const meta = document.createElement('div');
+  meta.className = 'comment-meta';
+  meta.textContent = c.author.name + ' ';
+  const time = document.createElement('span');
+  time.className = 'comment-time muted';
+  time.textContent = ' • ' + timeAgo(c.createdAt);
+  meta.appendChild(time);
+
+  const actionsWrap = document.createElement('div');
+  actionsWrap.className = 'comment-actions';
+
+  const likeBtn = document.createElement('button');
+  likeBtn.innerHTML = `<i class="fa-regular fa-thumbs-up"></i> <span>${c.likes||0}</span>`;
+  likeBtn.title = 'Like';
+  likeBtn.addEventListener('click', (e)=>{ e.stopPropagation(); toggleLike(c.id); });
+
+  const replyBtn = document.createElement('button');
+  replyBtn.innerHTML = `<i class="fa-regular fa-comment"></i> Reply`;
+  replyBtn.title = 'Reply';
+  replyBtn.addEventListener('click',(e)=>{ e.stopPropagation(); openReplyInput(c.id, wrapper); });
+
+  const delBtn = document.createElement('button');
+  delBtn.innerHTML = `<i class="fa-regular fa-trash-can"></i>`;
+  delBtn.title = 'Delete';
+  delBtn.addEventListener('click',(e)=>{ e.stopPropagation(); deleteComment(c.id); });
+
+  actionsWrap.append(likeBtn, replyBtn, delBtn);
+
+  top.append(meta, actionsWrap);
+
+  const text = document.createElement('div');
+  text.className = 'comment-text';
+  text.textContent = c.text;
+
+  body.append(top, text);
+
+  if(Array.isArray(c.replies) && c.replies.length > 0){
+    const repliesEl = document.createElement('div');
+    repliesEl.className = 'reply-list';
+    c.replies.forEach(r => {
+      const rEl = document.createElement('div');
+      rEl.className = 'comment';
+      rEl.style.padding = '10px';
+      rEl.style.background = 'transparent';
+
+      const rAvatar = document.createElement('img');
+      rAvatar.className = 'avatar';
+      rAvatar.src = r.author.avatar;
+      rAvatar.alt = r.author.name;
+
+      const rBody = document.createElement('div');
+      rBody.className = 'comment-body';
+
+      const rTop = document.createElement('div');
+      rTop.className = 'comment-top';
+
+      const rMeta = document.createElement('div'); rMeta.className = 'comment-meta';
+      rMeta.textContent = r.author.name;
+      const rTime = document.createElement('span'); rTime.className = 'comment-time muted';
+      rTime.textContent = ' • ' + timeAgo(r.createdAt);
+      rMeta.appendChild(rTime);
+
+      const rActions = document.createElement('div'); rActions.className = 'comment-actions';
+      const rLike = document.createElement('button');
+      rLike.innerHTML = `<i class="fa-regular fa-thumbs-up"></i> <span>${r.likes||0}</span>`;
+      rLike.title='Like';
+      rLike.addEventListener('click', ()=>{ toggleLike(c.id, r.id) });
+
+      const rDel = document.createElement('button');
+      rDel.innerHTML = `<i class="fa-regular fa-trash-can"></i>`;
+      rDel.title='Delete';
+      rDel.addEventListener('click', ()=>{ deleteReply(c.id, r.id) });
+
+      rActions.append(rLike, rDel);
+
+      rTop.append(rMeta, rActions);
+
+      const rText = document.createElement('div'); rText.className='comment-text'; rText.textContent = r.text;
+
+      rBody.append(rTop, rText);
+      rEl.append(rAvatar, rBody);
+      repliesEl.appendChild(rEl);
     });
+    body.appendChild(repliesEl);
   }
 
-  // AJAX for follow
-  document.querySelectorAll('.ajax-follow-btn').forEach(button => {
-    button.addEventListener('click', async () => {
-      const userId = button.dataset.userId;
-      let currentStatus = button.dataset.followStatus;
-      let endpoint = '';
-      if (currentStatus === 'following') {
-        endpoint = `/user/unfollow/${userId}`;
-      } else if (currentStatus === 'requested') {
-        endpoint = `/user/cancel-follow/${userId}`;
-      } else {
-        endpoint = `/user/follow/${userId}`;
-      }
-      try {
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'application/json'
-          }
-        });
-        if (response.ok) {
-          const data = await response.json();
-          currentStatus = data.newStatus;
-          button.dataset.followStatus = currentStatus;
-          button.classList.remove('following', 'requested');
-          if (currentStatus === 'following') {
-            button.innerHTML = '<i class="fas fa-user-minus"></i> Unfollow';
-            button.classList.add('following');
-          } else if (currentStatus === 'requested') {
-            button.innerHTML = '<i class="fas fa-user-times"></i> Cancel Request';
-            button.classList.add('requested');
-          } else {
-            button.innerHTML = '<i class="fas fa-user-plus"></i> Follow';
-          }
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    });
-  });
+  wrapper.append(avatar, body);
+  return wrapper;
+}
 
-  // Comment form submit
-  const commentForm = document.getElementById('commentForm');
-  if (commentForm) {
-    commentForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(commentForm);
-      try {
-        const response = await fetch(`/comment/${blogId}`, {
-          method: 'POST',
-          body: formData,
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-          }
-        });
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success) {
-            // Append new comment
-            const commentsContainer = document.getElementById('commentsContainer');
-            const noComments = document.getElementById('noComments');
-            if (noComments) noComments.remove();
-            const newCommentEl = createCommentElement(data.newComment);
-            commentsContainer.insertBefore(newCommentEl, commentsContainer.firstChild);
-            document.getElementById('newCommentText').value = '';
-            // Update total comments
-            const totalEl = document.querySelector('h2');
-            const match = totalEl.textContent.match(/\((\d+)\)/);
-            const currentTotal = match ? parseInt(match[1]) : 0;
-            totalEl.textContent = totalEl.textContent.replace(/\(\d+\)/, `(${currentTotal + 1})`);
-          }
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    });
+function addComment(text){
+  const trimmed = (text || '').trim();
+  if(!trimmed) return false;
+  const c = {
+    id: uid('c'),
+    author: currentUser,
+    text: trimmed,
+    createdAt: Date.now(),
+    likes: 0,
+    replies: []
+  };
+  comments.unshift(c);
+  saveState();
+  renderComments();
+  return true;
+}
+
+function addReply(parentId, text){
+  const trimmed = (text || '').trim();
+  if(!trimmed) return false;
+  const parent = comments.find(cc => cc.id === parentId);
+  if(!parent) return false;
+  const r = {
+    id: uid('r'),
+    author: currentUser,
+    text: trimmed,
+    createdAt: Date.now(),
+    likes: 0
+  };
+  parent.replies = parent.replies || [];
+  parent.replies.push(r);
+  saveState();
+  renderComments();
+  return true;
+}
+
+function deleteComment(id){
+  if(!confirm('Delete this comment?')) return;
+  comments = comments.filter(c => c.id !== id);
+  saveState();
+  renderComments();
+}
+
+function deleteReply(parentId, replyId){
+  if(!confirm('Delete this reply?')) return;
+  const parent = comments.find(c => c.id === parentId);
+  if(!parent) return;
+  parent.replies = parent.replies.filter(r => r.id !== replyId);
+  saveState();
+  renderComments();
+}
+
+function toggleLike(commentId, replyId){
+  const comment = comments.find(c => c.id === commentId);
+  if(!comment) return;
+  if(replyId){
+    const reply = comment.replies.find(r => r.id === replyId);
+    if(!reply) return;
+    reply.likes = (reply.likes || 0) + 1;
+  } else {
+    comment.likes = (comment.likes || 0) + 1;
   }
+  saveState();
+  renderComments();
+}
 
-  // Like comment
-  document.addEventListener('click', async (e) => {
-    const btn = e.target.closest('.like-comment-btn');
-    if (btn) {
-      e.stopPropagation();
-      const commentId = btn.dataset.commentId;
-      const isLiked = btn.classList.contains('liked');
-      try {
-        const response = await fetch(`/comment/${commentId}/like`, {
-          method: isLiked ? 'DELETE' : 'POST',
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'application/json'
-          }
-        });
-        if (response.ok) {
-          const data = await response.json();
-          btn.classList.toggle('liked');
-          btn.querySelector('.like-count').textContent = data.likesCount;
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    }
-  });
+function openReplyInput(commentId, commentNode){
+  const existing = document.querySelectorAll('.reply-input-temp');
+  existing.forEach(n => n.remove());
 
-  // Delete comment
-  document.addEventListener('click', async (e) => {
-    const btn = e.target.closest('.delete-comment-btn');
-    if (btn) {
-      e.stopPropagation();
-      if (!confirm('Delete this comment?')) return;
-      const commentId = btn.dataset.commentId;
-      const commentEl = btn.closest('.comment');
-      const isReply = commentEl.parentNode.classList.contains('reply-list');
-      try {
-        const response = await fetch(`/comment/${commentId}`, {
-          method: 'DELETE',
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'application/json'
-          }
-        });
-        if (response.ok) {
-          commentEl.remove();
-          // Update total if main comment
-          if (!isReply) {
-            const totalEl = document.querySelector('h2');
-            const match = totalEl.textContent.match(/\((\d+)\)/);
-            const currentTotal = match ? parseInt(match[1]) : 0;
-            totalEl.textContent = totalEl.textContent.replace(/\(\d+\)/, `(${Math.max(0, currentTotal - 1)})`);
-          }
-          // Check if no comments
-          const commentsContainer = document.getElementById('commentsContainer');
-          if (commentsContainer.children.length === 0) {
-            const noComments = document.createElement('div');
-            noComments.id = 'noComments';
-            noComments.className = 'center muted';
-            noComments.style.padding = '28px 0';
-            noComments.textContent = 'Be the first to comment.';
-            commentsContainer.appendChild(noComments);
-          }
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    }
-  });
-
-  // Reply button
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('.reply-btn');
-    if (btn) {
-      e.stopPropagation();
-      const commentId = btn.dataset.commentId;
-      const commentBody = btn.closest('.comment-body');
-      const replyContainer = commentBody.querySelector('.reply-form-container');
-      replyContainer.innerHTML = `
-        <div style="display:flex;gap:10px;align-items:flex-start;margin-top:10px;">
-          <img src="<%= user ? user.profileImageURL : '' %>" style="width:38px;height:38px;border-radius:50%">
-          <div style="flex:1">
-            <form class="reply-form">
-              <textarea name="content" placeholder="Write a reply..." style="width:100%;min-height:56px;padding:10px;border-radius:8px;border:1px solid rgba(2,6,23,0.06)" required></textarea>
-              <div style="display:flex;justify-content:flex-end;margin-top:8px">
-                <button type="button" class="btn" style="background:transparent;padding:8px 10px;border:1px solid rgba(2,6,23,0.06);border-radius:8px;margin-right:8px">Cancel</button>
-                <button type="submit" class="btn subscribe">Reply</button>
-              </div>
-            </form>
-          </div>
+  const node = document.createElement('div');
+  node.className = 'reply-input-temp';
+  node.style.marginTop = '10px';
+  node.innerHTML = `
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      <img src="${currentUser.avatar}" style="width:38px;height:38px;border-radius:50%">
+      <div style="flex:1">
+        <textarea placeholder="Write a reply..." style="width:100%;min-height:56px;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:#05060a;color:var(--text)"></textarea>
+        <div style="display:flex;justify-content:flex-end;margin-top:8px">
+          <button class="btn" style="background:transparent;padding:8px 10px;border:1px solid rgba(255,255,255,0.04);border-radius:8px;margin-right:8px">Cancel</button>
+          <button class="btn subscribe">Reply</button>
         </div>
-      `;
-      const replyForm = replyContainer.querySelector('.reply-form');
-      const cancelBtn = replyContainer.querySelector('.btn:not(.subscribe)');
-      const ta = replyContainer.querySelector('textarea');
-      ta.focus();
-      cancelBtn.addEventListener('click', () => { replyContainer.innerHTML = ''; });
-      replyForm.addEventListener('submit', async (ev) => {
-        ev.preventDefault();
-        const formData = new FormData(replyForm);
-        formData.append('blogId', blogId);
-        try {
-          const response = await fetch(`/comment/reply/${commentId}`, {
-            method: 'POST',
-            body: formData,
-            headers: {
-              'X-Requested-With': 'XMLHttpRequest'
-            }
-          });
-          if (response.ok) {
-            const data = await response.json();
-            if (data.success) {
-              const replyList = commentBody.querySelector('.reply-list') || (() => {
-                const newList = document.createElement('div');
-                newList.className = 'reply-list';
-                commentBody.appendChild(newList);
-                return newList;
-              })();
-              const newReplyEl = createReplyElement(data.newReply);
-              replyList.appendChild(newReplyEl);
-              replyContainer.innerHTML = '';
-              // Update total comments
-              const totalEl = document.querySelector('h2');
-              const match = totalEl.textContent.match(/\((\d+)\)/);
-              const currentTotal = match ? parseInt(match[1]) : 0;
-              totalEl.textContent = totalEl.textContent.replace(/\(\d+\)/, `(${currentTotal + 1})`);
-            }
-          }
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      });
-    }
+      </div>
+    </div>
+  `;
+  commentNode.querySelector('.comment-body').appendChild(node);
+  const ta = node.querySelector('textarea');
+  const cancel = node.querySelector('.btn');
+  const replyBtn = node.querySelector('.btn.subscribe');
+
+  cancel.addEventListener('click', ()=>node.remove());
+  replyBtn.addEventListener('click', ()=>{
+    const val = ta.value.trim();
+    if(!val) return alert('Reply cannot be empty.');
+    addReply(commentId, val);
   });
+  ta.focus();
+}
 
-  function createCommentElement(comment) {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'comment';
-    wrapper.dataset.commentId = comment._id;
-    // Similar to renderCommentEl in the original, but using server data
-    // ... (adapt from original JS, using comment.createdBy, comment.content, etc.)
-    // For brevity, assume similar structure as server-rendered above
-    return wrapper; // Placeholder: in full impl, build DOM like server but dynamic
-  }
+/* Post like & subscribe */
+likePostBtn.addEventListener('click', ()=>{
+  const current = parseInt(localStorage.getItem(LS_POST_LIKES) || '0', 10) || 0;
+  localStorage.setItem(LS_POST_LIKES, (current + 1).toString());
+  postLikeCountEl.textContent = current + 1;
+  likePostBtn.classList.add('active');
+});
 
-  function createReplyElement(reply) {
-    // Similar for reply
-    return document.createElement('div'); // Placeholder
+subscribeBtn.addEventListener('click', ()=>{
+  const sub = localStorage.getItem(LS_SUBSCRIBED) === '1';
+  localStorage.setItem(LS_SUBSCRIBED, sub ? '0' : '1');
+  subscribeBtn.textContent = sub ? 'Subscribe' : 'Subscribed';
+});
+
+subscribeEmailBtn.addEventListener('click', ()=>{
+  const email = emailField.value.trim();
+  if(!email || !email.includes('@')) return alert('Please enter a valid email.');
+  localStorage.setItem('demo_subscriber_email', email);
+  alert('Thanks! You are subscribed.');
+  emailField.value = '';
+});
+
+addCommentBtn.addEventListener('click', ()=>{
+  const val = newCommentText.value.trim();
+  if(!val) return alert('Comment cannot be empty.');
+  if(addComment(val)){
+    newCommentText.value = '';
+    renderComments();
   }
+});
+
+newCommentText.addEventListener('keydown', (e)=>{
+  if((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
+    addCommentBtn.click();
+  }
+});
+
+function seedDemo(){
+  if(localStorage.getItem(LS_COMMENTS_KEY)) return;
+  comments = [
+    {
+      id: uid('c'),
+      author: { id:'u_anna', name:'Anna', avatar:'https://i.pravatar.cc/60?img=10' },
+      text: 'Great article! I liked the simple structure and examples — very practical.',
+      createdAt: Date.now() - 1000*60*60*5,
+      likes: 2,
+      replies: [
+        { id: uid('r'), author:{id:'u_john',name:'John',avatar:'https://i.pravatar.cc/60?img=8'}, text:'Agree — especially the localStorage demo', createdAt: Date.now() - 1000*60*60*3, likes:1 }
+      ]
+    },
+    {
+      id: uid('c'),
+      author: { id:'u_maya', name:'Maya', avatar:'https://i.pravatar.cc/60?img=5' },
+      text: 'Would love to see a backend example next, with API endpoints.',
+      createdAt: Date.now() - 1000*60*60*24,
+      likes: 0,
+      replies: []
+    }
+  ];
+  saveState();
+}
+
+/* Start */
+seedDemo();
+loadState();
+renderComments();
+
+document.addEventListener('keyup', e=>{
+  if(e.key === 'Tab') document.body.classList.add('show-focus');
 });
 </script>
 </body>

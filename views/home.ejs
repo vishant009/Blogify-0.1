@@ -5,53 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blogifyer | Home</title>
 
-  <!-- Icons & Fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- External Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
 
   <style>
     :root {
-      --primary: #00b894;
-      --primary-dark: #009875;
-      --secondary: #2d3436;
-      --accent: #0984e3;
-      --danger: #e17055;
-      --bg-dark: #181c20;
-      --card-bg: #212529;
-      --text-light: #f5f6fa;
-      --text-muted: #b2becd;
-      --radius: 1rem;
+      --bg-color: #121212;
+      --surface-color: #1E1E1E;
+      --primary-color: #10B981; /* Emerald Green */
+      --primary-hover: #059669;
+      --secondary-color: #374151;
+      --danger-color: #EF4444;
+      --text-light: #F3F4F6;
+      --text-muted: #9CA3AF;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --radius: 12px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
+    /* --- General Styles --- */
     body {
-      background: var(--bg-dark);
+      background-color: var(--bg-color);
       color: var(--text-light);
       font-family: 'Poppins', sans-serif;
       margin: 0;
-      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Header */
+    /* --- Header --- */
     header {
       position: sticky;
       top: 0;
-      z-index: 100;
-      background: rgba(24, 28, 32, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid #2f3438;
-      padding: 0.8rem 2rem;
+      z-index: 1000;
+      background: rgba(18, 18, 18, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      transition: background 0.3s;
     }
 
     header h1 {
-      font-size: 1.5rem;
-      color: var(--primary);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin: 0;
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -60,166 +65,224 @@
     header nav a {
       color: var(--text-muted);
       text-decoration: none;
-      margin-left: 1.2rem;
+      margin-left: 1.5rem;
       font-weight: 500;
-      transition: color 0.2s;
+      transition: color 0.3s ease;
     }
 
     header nav a:hover {
-      color: var(--primary);
+      color: var(--primary-color);
     }
 
-    /* Main container */
+    /* --- Main Content --- */
     .main-container {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+      max-width: 1280px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
     }
 
     .section-title {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      color: var(--primary);
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: var(--text-light);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.8rem;
+    }
+    
+    .section-title i {
+      color: var(--primary-color);
     }
 
-    /* Blog grid */
+    /* --- Alert Messages --- */
+    .alert {
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.5rem;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        font-weight: 500;
+    }
+    .alert-success {
+        background-color: #10B98130;
+        color: #10B981;
+        border: 1px solid #10B981;
+    }
+    .alert-error {
+        background-color: #EF444430;
+        color: #EF4444;
+        border: 1px solid #EF4444;
+    }
+
+    /* --- Blog Grid --- */
     .blogs-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 2rem;
     }
 
     .blog-card {
-      background: var(--card-bg);
+      background: var(--surface-color);
       border-radius: var(--radius);
       overflow: hidden;
-      border: 1px solid #2b3035;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease, border-color 0.2s;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .blog-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--primary);
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
     }
 
     .blog-cover {
       width: 100%;
-      height: 200px;
+      height: 220px;
       object-fit: cover;
     }
 
     .blog-content {
-      padding: 1.2rem 1rem 1.5rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1; /* Allows content to fill the card */
     }
 
     .author {
       display: flex;
       align-items: center;
-      margin-bottom: 0.8rem;
+      margin-bottom: 1rem;
     }
 
     .author img {
-      width: 42px;
-      height: 42px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
-      margin-right: 0.8rem;
-      border: 2px solid var(--primary);
+      margin-right: 1rem;
+      border: 2px solid var(--primary-color);
     }
 
     .author a {
-      color: var(--primary);
+      color: var(--text-light);
       font-weight: 600;
       text-decoration: none;
+      transition: color 0.2s;
+    }
+    .author a:hover {
+        color: var(--primary-color);
     }
 
     .blog-title {
-      font-size: 1.25rem;
+      font-size: 1.4rem;
       font-weight: 600;
-      margin: 0.5rem 0;
+      margin: 0;
+      line-height: 1.4;
     }
 
     .blog-title a {
       color: var(--text-light);
       text-decoration: none;
+      transition: color 0.2s;
     }
 
     .blog-title a:hover {
-      color: var(--primary);
+      color: var(--primary-color);
     }
 
     .blog-meta {
       font-size: 0.9rem;
       color: var(--text-muted);
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 1rem;
+      gap: 1.5rem;
+      margin: 0.75rem 0;
+    }
+    .blog-meta i {
+        margin-right: 0.4rem;
     }
 
     .blog-excerpt {
       color: var(--text-muted);
       font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 1rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
     }
 
     .blog-excerpt a {
-      color: var(--primary);
+      color: var(--primary-color);
       text-decoration: none;
+      font-weight: 500;
+      margin-left: 0.25rem;
     }
 
+    /* --- Action Buttons --- */
     .blog-actions {
       display: flex;
-      gap: 0.6rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
+      margin-top: auto; /* Pushes buttons to the bottom */
     }
 
     .btn {
       border: none;
       outline: none;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      background: var(--primary);
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      background: var(--primary-color);
       color: #fff;
       cursor: pointer;
       font-size: 0.95rem;
-      display: flex;
+      font-weight: 500;
+      display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      transition: background 0.2s, transform 0.2s;
+      gap: 0.5rem;
+      transition: background-color 0.2s, transform 0.2s;
     }
 
     .btn:hover {
-      background: var(--primary-dark);
-      transform: scale(1.05);
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn.liked {
+        background-color: var(--danger-color);
     }
 
     .btn-secondary {
-      background: var(--secondary);
+      background: var(--secondary-color);
     }
-
-    .btn-danger {
-      background: var(--danger);
+    .btn-secondary:hover {
+      background: #4B5563;
     }
 
     .no-blogs {
       text-align: center;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       color: var(--text-muted);
-      margin-top: 3rem;
+      margin-top: 4rem;
+    }
+
+    /* --- Responsive Design --- */
+    @media (max-width: 768px) {
+      .blogs-grid {
+        grid-template-columns: 1fr;
+      }
+      .section-title {
+        font-size: 1.8rem;
+      }
+      header {
+        padding: 1rem 1.5rem;
+      }
     }
 
     @media (max-width: 600px) {
       header {
         flex-direction: column;
-        gap: 0.7rem;
-        padding: 1rem;
-      }
-      .section-title {
-        font-size: 1.4rem;
+        gap: 1rem;
       }
     }
   </style>
@@ -229,7 +292,7 @@
   <%- include('partials/header', { user }) %>
 
   <main class="main-container">
-    <h2 class="section-title"><i class="fas fa-blog"></i> Latest Blogs</h2>
+    <h2 class="section-title"><i class="fas fa-stream"></i> Latest Posts</h2>
 
     <% if (success_msg) { %>
       <div class="alert alert-success"><i class="fas fa-check-circle"></i> <%= success_msg %></div>
@@ -239,7 +302,7 @@
     <% } %>
 
     <% if (blogs.length === 0) { %>
-      <p class="no-blogs">No blogs found. <a href="/blog/addBlog" style="color:var(--primary);">Create one now!</a></p>
+      <p class="no-blogs">No blogs found. <a href="/blog/addBlog" style="color:var(--primary-color);">Create one now!</a></p>
     <% } else { %>
       <div class="blogs-grid">
         <% blogs.forEach(blog => { %>
@@ -255,30 +318,31 @@
                   <small style="color:var(--text-muted);"><%= moment(blog.createdAt).fromNow() %></small>
                 </div>
               </div>
-              <div class="blog-title">
+              <h3 class="blog-title">
                 <a href="/blog/<%= blog._id %>"><%= blog.title %></a>
-              </div>
+              </h3>
               <div class="blog-meta">
                 <span><i class="fas fa-heart"></i> <%= blog.likes.length %></span>
                 <span><i class="fas fa-comments"></i> <%= blog.totalComments %></span>
               </div>
               <div class="blog-excerpt">
-                <%= blog.body.length > 180 ? blog.body.substring(0, 180) + '...' : blog.body %>
-                <a href="/blog/<%= blog._id %>">Read more</a>
+                <%- blog.body.length > 150 ? blog.body.substring(0, 150) + '...' : blog.body %>
+                <% if(blog.body.length > 150) { %>
+                  <a href="/blog/<%= blog._id %>">Read more</a>
+                <% } %>
               </div>
               <div class="blog-actions">
                 <% if (user) { %>
-                  <button class="btn <%= blog.likes.some(l => l._id.toString() === user._id.toString()) ? 'btn-danger' : '' %> ajax-like-btn" data-blog-id="<%= blog._id %>">
+                  <button class="btn <%= blog.likes.some(l => l._id.toString() === user._id.toString()) ? 'liked' : '' %> ajax-like-btn" data-blog-id="<%= blog._id %>">
                     <i class="fas fa-heart"></i>
-                    <%= blog.likes.some(l => l._id.toString() === user._id.toString()) ? 'Unlike' : 'Like' %>
+                    <span class="like-text"><%= blog.likes.some(l => l._id.toString() === user._id.toString()) ? 'Unlike' : 'Like' %></span>
                   </button>
                   <% if (!blog.isOwn) { %>
-                    <button class="btn ajax-follow-btn" data-user-id="<%= blog.createdBy._id %>">
+                    <button class="btn btn-secondary ajax-follow-btn" data-user-id="<%= blog.createdBy._id %>">
                       <i class="fas fa-user-plus"></i> Follow
                     </button>
                   <% } %>
                 <% } %>
-                <a href="/blog/<%= blog._id %>" class="btn btn-secondary"><i class="fas fa-book-open"></i> Read</a>
               </div>
             </div>
           </div>
@@ -289,6 +353,8 @@
 
   <script>
     // Placeholder for interactions like likes, follows, dropdowns etc.
+    // NOTE: You might need to update your AJAX script to toggle the 'liked' class
+    // on the button and change the text inside the '.like-text' span.
   </script>
 </body>
 </html>
